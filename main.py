@@ -7,8 +7,6 @@ import os
 from datetime import datetime
 import argparse
 
-XLSX_PATH = "Ejemplo Excel.xlsx"
-
 
 def warning(s):
     print(f"WARNING: {s}", file=sys.stderr)
@@ -82,8 +80,6 @@ def xlsx2json(path):
                                  "invoice_date": check_date,
                                  "max_cancel_date": check_date})
 
-    #  pd.set_option('display.max_columns', None)
-    #  print(workbook)
     workbook["purchase_order_id"] = workbook.apply(lambda row: {
         "partner_ref": row["purchase_order_id.partner_ref"],
         "currency_id": row["purchase_order_id.currency_id"],
@@ -145,6 +141,8 @@ if __name__ == "__main__":
             namespace.output, "w")
         dump = xlsx2json(namespace.file)
         print(dump, file=outfile)
+        if outfile_is_stdout:
+            outfile.close()
     except FileNotFoundError:
         error(
             f"El archivo {namespace.file} no existe o no se tienen permisos para leerlo.")
