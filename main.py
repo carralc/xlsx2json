@@ -2,6 +2,9 @@ import pandas as pd
 import dateutil
 from dateutil.parser import ParserError
 import sys
+import json
+import os
+from datetime import datetime
 
 XLSX_PATH = "Ejemplo Excel.xlsx"
 
@@ -16,23 +19,34 @@ def error(s):
 
 
 def check_date(s):
-    """Intenta hacer parse de una cadena de fecha y emite un warning
-    si no se puede acoplar al formato esperado"""
-    FORMAT = "%Y-%m-%d"
+    """Intenta hacer parse una fecha y emite un warning
+    o detiene el programa completamente si no se puede 
+    acoplar al formato esperado"""
+    OUT_FORMAT = "%Y-%m-%d"
 
     if 'datetime.datetime' in str(type(s)):
-        return s.strftime(FORMAT)
-    elif "string" in str(type(s)):
+        return s.strftime(OUT_FORMAT)
+    elif "str" in str(type(s)):
         warning(
-            f"El objeto {s} no es una fecha. Intentando interpretar como fecha")
+            f"El objeto {s} no es una fecha en Excel. "
+            "Intentando interpretar como fecha")
+        # Tratar de interpretar rígidamente en formato "%d/%m/%Y"
         try:
-            # Hacer un parse en "best effort"
-            date = dateutil.parser.parse(str(s))
-            return date.strftime(FORMAT)
+            date = datetime.strptime(s, "%d/%m/%Y")
+            return date.strftime(OUT_FORMAT)
+        except ValueError:
+            warning(
+                f"El objeto {s} no pudo ser interpredado en el formato dd/mm/YYYY")
+        try:
+            warning(f"Haciendo un intento final de interpretar {s}")
+            date = dateutil.parser.parse(s)
+            return date.strftime(OUT_FORMAT)
         except ParserError:
             error(
                 f"Imposible determinar una fecha de {s}. Deteniendo proceso.")
             pass
+    else:
+        error(f"Un objeto de tipo {type(s)} no es interpretable como fecha")
 
 
 def xlsx2json(path):
@@ -105,6 +119,7 @@ def xlsx2json(path):
 
     data = workbook.to_dict(orient="records")
     object_count = len(data)
+    # La última modificación del archivo
     last_mod_epoch = os.path.getmtime(path)
     timestamp = datetime.fromtimestamp(last_mod_epoch)
     return json.dumps({
@@ -115,4 +130,5 @@ def xlsx2json(path):
 
 
 if __name__ == "__main__":
-    xlsx2json(XLSX_PATH)
+    dump = xlsx2json(XLSX_PATH)
+    print(dump)
