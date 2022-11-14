@@ -104,6 +104,14 @@ def xlsx2json(path):
     ], axis=1, inplace=True)
 
     data = workbook.to_dict(orient="records")
+    object_count = len(data)
+    last_mod_epoch = os.path.getmtime(path)
+    timestamp = datetime.fromtimestamp(last_mod_epoch)
+    return json.dumps({
+        "date": timestamp.isoformat(),
+        "object_count": object_count,
+        "data": data
+    })
 
 
 if __name__ == "__main__":
