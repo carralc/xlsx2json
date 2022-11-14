@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import pandas as pd
 import dateutil
 from dateutil.parser import ParserError
