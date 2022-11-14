@@ -5,6 +5,7 @@ import sys
 import json
 import os
 from datetime import datetime
+import argparse
 
 XLSX_PATH = "Ejemplo Excel.xlsx"
 
@@ -130,5 +131,13 @@ def xlsx2json(path):
 
 
 if __name__ == "__main__":
-    dump = xlsx2json(XLSX_PATH)
-    print(dump)
+    parser = argparse.ArgumentParser(
+        prog="xlsx2json",
+        description="Convierte un archivo .xlsx a json")
+    parser.add_argument('archivo.xlsx')
+    parser.add_argument(
+        '-o', "--output", help="Nombre de archivo de salida. STDOUT por default", default=sys.stdout)
+    parser.parse_args()
+
+    #  dump = xlsx2json(XLSX_PATH)
+    #  print(dump)
