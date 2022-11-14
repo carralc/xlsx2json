@@ -12,11 +12,18 @@ pip install -r requirements.txt
 ./xlsx2json ARCHIVO.xlsx -o salida.json
 ```
 
+# TODO:
+- [ ] Orden de los campos
+- [ ] Validación de estructura de xlsx
+
 ## Ejemplo de salida
 ```json
 {
-  "date": "2022-11-14T13:10:16.710346",
-  "object_count": 4,
+  "meta": {
+    "date": "2022-11-14T13:10:16.710346",
+    "object_count": 4,
+    "type": "invoices"
+  },
   "data": [
     {
       "check_in_date": "2022-01-11",

@@ -6,6 +6,7 @@ import sys
 import json
 import os
 from datetime import datetime
+from collections import OrderedDict
 import argparse
 
 
@@ -115,14 +116,18 @@ def xlsx2json(path):
         "partner_id.country_id"
     ], axis=1, inplace=True)
 
-    data = workbook.to_dict(orient="records")
+    data = workbook.to_dict(orient="records", into=OrderedDict)
     object_count = len(data)
     # La última modificación del archivo
     last_mod_epoch = os.path.getmtime(path)
     timestamp = datetime.fromtimestamp(last_mod_epoch)
-    return json.dumps({
+    metadata = {
         "date": timestamp.isoformat(),
         "object_count": object_count,
+        "type": "invoices"
+    }
+    return json.dumps({
+        "meta": metadata,
         "data": data
     })
 
