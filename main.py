@@ -134,7 +134,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(
         prog="xlsx2json",
         description="Convierte un archivo .xlsx a json")
-    parser.add_argument('FILE')
+    parser.add_argument('file')
     parser.add_argument(
         '-o', "--output", help="Nombre de archivo de salida. STDOUT por default")
     namespace = parser.parse_args()
@@ -143,11 +143,8 @@ if __name__ == "__main__":
 
         outfile = sys.stdout if outfile_is_stdout else open(
             namespace.output, "w")
-        with open(namespace.FILE, "rb") as xlsx:
-            pass
+        dump = xlsx2json(namespace.file)
+        print(dump, file=outfile)
     except FileNotFoundError:
         error(
-            f"El archivo {namespace.FILE} no existe o no se tienen permisos para leerlo.")
-
-    #  dump = xlsx2json(XLSX_PATH)
-    #  print(dump)
+            f"El archivo {namespace.file} no existe o no se tienen permisos para leerlo.")
