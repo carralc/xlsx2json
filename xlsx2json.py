@@ -83,10 +83,10 @@ def xlsx2json(path):
                                  "max_cancel_date": check_date})
 
     workbook["purchase_order_id"] = workbook.apply(lambda row: {
+        "partner_id": row["purchase_order_id.partner_id"],
         "partner_ref": row["purchase_order_id.partner_ref"],
-        "currency_id": row["purchase_order_id.currency_id"],
         "price_unit": row["purchase_order_id.price_unit"],
-        "partner_id": row["purchase_order_id.partner_id"]
+        "currency_id": row["purchase_order_id.currency_id"],
     }, axis=1)
 
     workbook.drop(["purchase_order_id.partner_ref",
@@ -95,9 +95,9 @@ def xlsx2json(path):
                    "purchase_order_id.partner_id"], axis=1, inplace=True)
 
     workbook["invoice_line_ids"] = workbook.apply(lambda row: [{
+        "product_id": row["invoice_line_ids.product_id"],
         "name": row["invoice_line_ids.name"],
         "price_unit": row["invoice_line_ids.price_unit"],
-        "product_id": row["invoice_line_ids.product_id"],
     }], axis=1)
 
     workbook.drop(["invoice_line_ids.name",
@@ -115,6 +115,12 @@ def xlsx2json(path):
         "partner_id.name",
         "partner_id.country_id"
     ], axis=1, inplace=True)
+
+    # Reordenar columnas
+    workbook = workbook[["ref", "partner_id", "company_id", "invoice_date",
+                         "currency_id", "check_in_date", "is_refundable",
+                         "max_cancel_date", "invoice_line_ids",
+                         "purchase_order_id", "journal_id"]]
 
     data = workbook.to_dict(orient="records", into=OrderedDict)
     object_count = len(data)
