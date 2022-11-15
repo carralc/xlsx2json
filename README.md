@@ -9,7 +9,7 @@ pip install -r requirements.txt
 
 ## Utilización
 ```bash
-./xlsx2json ARCHIVO.xlsx -o salida.json
+./xlsx2json.py ARCHIVO.xlsx -o salida.json
 ```
 
 # TODO:

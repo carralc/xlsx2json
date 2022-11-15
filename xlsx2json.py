@@ -40,6 +40,8 @@ def check_date(s):
                 f"El objeto {s} no pudo ser interpredado en el formato dd/mm/YYYY")
         try:
             warning(f"Haciendo un intento final de interpretar {s}")
+            # Hacer el mejor esfuerzo por interpretarlo, aún cuando no se ajusta
+            # a la entrada esperada.
             date = dateutil.parser.parse(s)
             return date.strftime(OUT_FORMAT)
         except ParserError:
