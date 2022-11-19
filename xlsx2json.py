@@ -86,6 +86,8 @@ def xlsx2json(path):
                                  "invoice_date": check_date,
                                  "max_cancel_date": check_date})
 
+    workbook["type"] = "out_invoice"
+
     workbook["purchase_order_id"] = workbook.apply(lambda row: {
         "partner_id": row["purchase_order_id.partner_id"],
         "partner_ref": row["purchase_order_id.partner_ref"],
