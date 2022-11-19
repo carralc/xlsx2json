@@ -104,6 +104,7 @@ def xlsx2json(path):
         "product_id": row["invoice_line_ids.product_id"],
         "name": row["invoice_line_ids.name"],
         "price_unit": row["invoice_line_ids.price_unit"],
+        "sales_channel": row["partner_id.ref"]
     }], axis=1)
 
     workbook.drop(["invoice_line_ids.name",
