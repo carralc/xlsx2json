@@ -109,12 +109,14 @@ def xlsx2json(path):
     workbook["partner_id"] = workbook.apply(lambda row: {
         "ref": row["partner_id.ref"],
         "name": row["partner_id.name"],
+        "vat": row["partner_id.vat"],
         "country_id": row["partner_id.country_id"],
     }, axis=1)
 
     workbook.drop([
         "partner_id.ref",
         "partner_id.name",
+        "partner_id.vat",
         "partner_id.country_id"
     ], axis=1, inplace=True)
 
