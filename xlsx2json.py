@@ -71,12 +71,14 @@ def xlsx2json(path):
               "invoice_date",
               "company_id",
               "invoice_line_ids.product_id",
-              "is_refundable"]
+              "is_refundable",
+              "l10n_mx_edi_payment_method_id"]
 
     workbook = pd.read_excel(path,
                              # Usar solo las columnas que nos interesan
                              usecols=[0, 2, 3, 5, 6, 7, 8, 9, 10,
-                                      11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
+                                      11, 12, 13, 14, 15, 16, 17,
+                                      18, 19, 20, 21],
                              # Usar los nombres del modelo
                              names=fields, parse_dates=False,
                              converters={
@@ -123,8 +125,9 @@ def xlsx2json(path):
     # Reordenar columnas
     workbook = workbook[["ref", "partner_id", "company_id", "invoice_date",
                          "currency_id", "check_in_date", "is_refundable",
-                         "max_cancel_date", "invoice_line_ids",
-                         "purchase_order_id", "journal_id"]]
+                         "max_cancel_date", "l10n_mx_edi_payment_method_id",
+                         "type", "invoice_line_ids", "purchase_order_id",
+                         "journal_id"]]
 
     data = workbook.to_dict(orient="records", into=OrderedDict)
     object_count = len(data)
