@@ -88,6 +88,14 @@ def xlsx2json(path):
 
     workbook["type"] = "out_invoice"
 
+    workbook["multicurrency"] = workbook.apply(lambda row: {
+        "currency": row["currency_id"],
+        "currency_amount": row["invoice_line_ids.price_unit"],
+        "rate": 0,
+        "conversion_value": row["invoice_line_ids.price_unit"],
+        "comission_fixed": 0
+    }, axis=1)
+
     workbook["purchase_order_id"] = workbook.apply(lambda row: {
         "partner_id": row["purchase_order_id.partner_id"],
         "partner_ref": row["purchase_order_id.partner_ref"],
@@ -126,11 +134,12 @@ def xlsx2json(path):
     ], axis=1, inplace=True)
 
     # Reordenar columnas
-    workbook = workbook[["ref", "partner_id", "company_id", "invoice_date",
+    workbook = workbook[["ref", "partner_id", "company_id",
+                         "invoice_date", "currency_id",
                          "currency_id", "check_in_date", "is_refundable",
                          "max_cancel_date", "l10n_mx_edi_payment_method_id",
-                         "type", "invoice_line_ids", "purchase_order_id",
-                         "journal_id"]]
+                         "type", "invoice_line_ids",
+                         "multicurrency", "purchase_order_id", "journal_id"]]
 
     data = workbook.to_dict(orient="records", into=OrderedDict)
     object_count = len(data)
