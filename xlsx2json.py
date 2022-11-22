@@ -101,7 +101,8 @@ def xlsx2json(path):
         "partner_ref": row["purchase_order_id.partner_ref"],
         "price_unit": row["purchase_order_id.price_unit"],
         "currency_id": row["purchase_order_id.currency_id"],
-        "due_date": row["invoice_date"]
+        "date_order": row["invoice_date"],
+        "due_date": row["check_in_date"]
     }, axis=1)
 
     workbook.drop(["purchase_order_id.partner_ref",
