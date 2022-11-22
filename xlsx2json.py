@@ -88,6 +88,8 @@ def xlsx2json(path):
 
     workbook["type"] = "out_invoice"
 
+    workbook["invoice_date_due"] = workbook["invoice_date"]
+
     workbook["multicurrency"] = workbook.apply(lambda row: {
         "currency": row["currency_id"],
         "currency_amount": row["invoice_line_ids.price_unit"],
@@ -140,8 +142,9 @@ def xlsx2json(path):
                          "invoice_date", "currency_id",
                          "currency_id", "check_in_date", "is_refundable",
                          "max_cancel_date", "l10n_mx_edi_payment_method_id",
-                         "type", "invoice_line_ids",
-                         "multicurrency", "purchase_order_id", "journal_id"]]
+                         "type", "invoice_line_ids", "multicurrency",
+                         "purchase_order_id", "journal_id",
+                         "invoice_date_due"]]
 
     data = workbook.to_dict(orient="records", into=OrderedDict)
     object_count = len(data)
