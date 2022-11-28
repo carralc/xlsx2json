@@ -46,6 +46,7 @@ pip install -r requirements.txt
           "product_id": 1,
           "name": "Hôtel Villa Cosy",
           "price_unit": 577,
+          "commission_id": 20.0,
           "sales_channel": "BB00021"
         }
       ],
@@ -88,6 +89,7 @@ pip install -r requirements.txt
           "product_id": 1,
           "name": "Hilton Madrid Airport",
           "price_unit": 138,
+          "commission_id": null,
           "sales_channel": "BB00021"
         }
       ],
@@ -130,6 +132,7 @@ pip install -r requirements.txt
           "product_id": 6,
           "name": "Lo mejor de la Toscana en grupo reducido: Montepulciano y Pienza con maridaje de vino y comida",
           "price_unit": 217,
+          "commission_id": null,
           "sales_channel": "BB00021"
         }
       ],
@@ -172,6 +175,7 @@ pip install -r requirements.txt
           "product_id": 6,
           "name": "Museos Vaticanos, Capilla Sixtina y basílica de San Pedro - Acceso prioritario",
           "price_unit": 105,
+          "commission_id": null,
           "sales_channel": "BB00021"
         }
       ],

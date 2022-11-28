@@ -72,13 +72,14 @@ def xlsx2json(path):
               "company_id",
               "invoice_line_ids.product_id",
               "is_refundable",
-              "l10n_mx_edi_payment_method_id"]
+              "l10n_mx_edi_payment_method_id",
+              "invoice_line_ids.commission_id"]
 
     workbook = pd.read_excel(path,
                              # Usar solo las columnas que nos interesan
                              usecols=[0, 2, 3, 5, 6, 7, 8, 9, 10,
                                       11, 12, 13, 14, 15, 16, 17,
-                                      18, 19, 20, 21],
+                                      18, 19, 20, 21, 22],
                              # Usar los nombres del modelo
                              names=fields, parse_dates=False,
                              converters={
@@ -116,6 +117,7 @@ def xlsx2json(path):
         "product_id": row["invoice_line_ids.product_id"],
         "name": row["invoice_line_ids.name"],
         "price_unit": row["invoice_line_ids.price_unit"],
+        "commission_id": row["invoice_line_ids.commission_id"],
         "sales_channel": row["partner_id.ref"]
     }], axis=1)
 
