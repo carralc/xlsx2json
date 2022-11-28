@@ -140,7 +140,7 @@ def xlsx2json(path):
     # Reordenar columnas
     workbook = workbook[["ref", "partner_id", "company_id",
                          "invoice_date", "currency_id",
-                         "currency_id", "check_in_date", "is_refundable",
+                         "check_in_date", "is_refundable",
                          "max_cancel_date", "l10n_mx_edi_payment_method_id",
                          "type", "invoice_line_ids", "multicurrency",
                          "purchase_order_id", "journal_id",
