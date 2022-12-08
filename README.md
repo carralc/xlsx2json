@@ -20,7 +20,7 @@ pip install -r requirements.txt
 ```json
 {
   "meta": {
-    "date": "2022-11-28T10:28:48.599924",
+    "date": "2022-12-07T18:23:13.237546",
     "object_count": 4,
     "type": "invoices"
   },
@@ -165,7 +165,7 @@ pip install -r requirements.txt
       "company_id": "PAO",
       "invoice_date": "2022-01-11",
       "currency_id": "USD",
-      "check_in_date": "2022-11-29",
+      "check_in_date": "2022-11-22",
       "is_refundable": true,
       "max_cancel_date": "2022-01-11",
       "l10n_mx_edi_payment_method_id": null,
@@ -192,7 +192,7 @@ pip install -r requirements.txt
         "price_unit": 101.14,
         "currency_id": "USD",
         "date_order": "2022-01-11",
-        "due_date": "2022-11-29"
+        "due_date": "2022-11-22"
       },
       "journal_id": "BB00021",
       "invoice_date_due": "2022-01-11"
