@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-import pandas as pd
 import dateutil
 from dateutil.parser import ParserError
 import sys
@@ -45,118 +44,6 @@ def check_date(s):
 
 
 def xlsx2json(path):
-    fields = ["purchase_order_id.partner_ref",
-              "invoice_line_ids.name",
-              "check_in_date",
-              "max_cancel_date",
-              "purchase_order_id.price_unit",
-              "currency_id",
-              "invoice_line_ids.price_unit",
-              "purchase_order_id.currency_id",
-              "ref",
-              "purchase_order_id.partner_id",
-              "partner_id.ref",
-              "partner_id.name",
-              "partner_id.vat",
-              "journal_id",
-              "partner_id.country_id",
-              "invoice_date",
-              "company_id",
-              "invoice_line_ids.product_id",
-              "is_refundable",
-              "l10n_mx_edi_payment_method_id",
-              "invoice_line_ids.commission_id"]
-
-    workbook = pd.read_excel(path,
-                             # Usar solo las columnas que nos interesan
-                             usecols=[0, 2, 3, 5, 6, 7, 8, 9, 10,
-                                      11, 12, 13, 14, 15, 16, 17,
-                                      18, 19, 20, 21, 22],
-                             # Usar los nombres del modelo
-                             names=fields, parse_dates=False,
-                             converters={
-                                 "check_in_date": check_date,
-                                 "invoice_date": check_date,
-                                 "max_cancel_date": check_date})
-
-    workbook["type"] = "out_invoice"
-
-    workbook["invoice_date_due"] = workbook["invoice_date"]
-
-    workbook["multicurrency"] = workbook.apply(lambda row: {
-        "currency": row["currency_id"],
-        "currency_amount": row["invoice_line_ids.price_unit"],
-        "rate": 0,
-        "conversion_value": row["invoice_line_ids.price_unit"],
-        "comission_fixed": 0
-    }, axis=1)
-
-    workbook["purchase_order_id"] = workbook.apply(lambda row: {
-        "partner_id": row["purchase_order_id.partner_id"],
-        "partner_ref": row["purchase_order_id.partner_ref"],
-        "price_unit": row["purchase_order_id.price_unit"],
-        "currency_id": row["purchase_order_id.currency_id"],
-        "date_order": row["invoice_date"],
-        "due_date": row["check_in_date"]
-    }, axis=1)
-
-    workbook.drop(["purchase_order_id.partner_ref",
-                   "purchase_order_id.currency_id",
-                   "purchase_order_id.price_unit",
-                   "purchase_order_id.partner_id"], axis=1, inplace=True)
-
-    workbook["invoice_line_ids"] = workbook.apply(lambda row: [{
-        "product_id": row["invoice_line_ids.product_id"],
-        "name": row["invoice_line_ids.name"],
-        "price_unit": row["invoice_line_ids.price_unit"],
-        "commission_id": row["invoice_line_ids.commission_id"],
-        "sales_channel": row["partner_id.ref"]
-    }], axis=1)
-
-    workbook.drop(["invoice_line_ids.name",
-                   "invoice_line_ids.price_unit",
-                   "invoice_line_ids.product_id"], axis=1, inplace=True)
-
-    workbook["partner_id"] = workbook.apply(lambda row: {
-        "ref": row["partner_id.ref"],
-        "name": row["partner_id.name"],
-        "vat": row["partner_id.vat"],
-        "country_id": row["partner_id.country_id"],
-    }, axis=1)
-
-    workbook.drop([
-        "partner_id.ref",
-        "partner_id.name",
-        "partner_id.vat",
-        "partner_id.country_id"
-    ], axis=1, inplace=True)
-
-    # Reordenar columnas
-    workbook = workbook[["ref", "partner_id", "company_id",
-                         "invoice_date", "currency_id",
-                         "check_in_date", "is_refundable",
-                         "max_cancel_date", "l10n_mx_edi_payment_method_id",
-                         "type", "invoice_line_ids", "multicurrency",
-                         "purchase_order_id", "journal_id",
-                         "invoice_date_due"]]
-
-    data = workbook.to_dict(orient="records", into=OrderedDict)
-    object_count = len(data)
-    # La última modificación del archivo
-    last_mod_epoch = os.path.getmtime(path)
-    timestamp = datetime.fromtimestamp(last_mod_epoch)
-    metadata = {
-        "date": timestamp.isoformat(),
-        "object_count": object_count,
-        "type": "invoices"
-    }
-    return json.dumps({
-        "meta": metadata,
-        "data": data
-    })
-
-
-def xlsx2jsonxlrd(path):
     book = xlrd.open_workbook(path)
     datemode = book.datemode
     sheet = book.sheet_by_index(0)
@@ -204,7 +91,7 @@ def transform_row(sheet, row, datemode):
 
     DATE_OUT_FORMAT = "%Y-%m-%d"
 
-    out = {}
+    out = OrderedDict()
 
     out["ref"] = sheet.cell_value(row, REF)
     out["partner_id"] = {
@@ -298,7 +185,7 @@ if __name__ == "__main__":
     try:
         outfile = sys.stdout if outfile_is_stdout else open(
             namespace.output, "w")
-        dump = xlsx2jsonxlrd(namespace.file)
+        dump = xlsx2json(namespace.file)
         print(dump, file=outfile)
         if outfile_is_stdout:
             outfile.close()
