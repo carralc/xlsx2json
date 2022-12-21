@@ -134,7 +134,9 @@ def transform_row(sheet, row, datemode):
 
     out["is_refundable"] = bool(sheet.cell_value(row, IS_REFUNDABLE))
 
-    out["max_cancel_date"] = sheet.cell_value(row, MAX_CANCEL_DATE)
+    max_cancel_date_cell_value = sheet.cell_value(row, MAX_CANCEL_DATE)
+    max_cancel_date = get_date(max_cancel_date_cell_value)
+    out["max_cancel_date"] = max_cancel_date.strftime(DATE_OUT_FORMAT)
 
     out["l10n_mx_edi_payment_method_id"] = sheet.cell_value(
         row, L10N_MX_EDI_PAYMENT_METHOD_ID)
