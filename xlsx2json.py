@@ -138,13 +138,16 @@ def transform_row(sheet, row, datemode):
     max_cancel_date = get_date(max_cancel_date_cell_value)
     out["max_cancel_date"] = max_cancel_date.strftime(DATE_OUT_FORMAT)
 
-    out["l10n_mx_edi_payment_method_id"] = sheet.cell_value(
+    l10n_mx_edi_payment_method_id = sheet.cell_value(
         row, L10N_MX_EDI_PAYMENT_METHOD_ID)
+    out["l10n_mx_edi_payment_method_id"] = str(
+        int(l10n_mx_edi_payment_method_id))
 
     out["type"] = "out_invoice"
 
     out["invoice_line_ids"] = [{
-        "product_id": sheet.cell_value(row, INVOICE_LINE_IDS_PRODUCT_ID),
+        "product_id": str(int(sheet.cell_value(row, INVOICE_LINE_IDS_PRODUCT_ID))),
+        "quantity": 1,
         "name": sheet.cell_value(row, INVOICE_LINE_IDS_NAME),
         "price_unit": sheet.cell_value(row, INVOICE_LINE_IDS_PRICE_UNIT),
         "commission_id": sheet.cell_value(row, INVOICE_LINE_IDS_COMMISSION_ID),
@@ -160,7 +163,7 @@ def transform_row(sheet, row, datemode):
     }
 
     out["purchase_order_id"] = {
-        "partner_id": sheet.cell_value(row, PURCHASE_ORDER_ID_PARTNER_ID),
+        "partner_id": str(int(sheet.cell_value(row, PURCHASE_ORDER_ID_PARTNER_ID))),
         "partner_ref": sheet.cell_value(row, PURCHASE_ORDER_ID_PARTNER_REF),
         "price_unit": sheet.cell_value(row, PURCHASE_ORDER_ID_PRICE_UNIT),
         "currency_id": sheet.cell_value(row, PURCHASE_ORDER_ID_CURRENCY_ID),
