@@ -9,8 +9,6 @@ from collections import OrderedDict
 import xlrd
 import argparse
 
-XLSX_PATH = "./Ejemplo Excel.xlsx"
-
 
 def warning(s):
     print(f"WARNING: {s}", file=sys.stderr)
@@ -64,6 +62,14 @@ def xlsx2json(path):
         "meta": metadata,
         "data": data
     })
+
+
+def normalize_id_str(id):
+    return str(int(id))
+
+
+def normalize_id_num(id):
+    return int(id)
 
 
 def transform_row(sheet, row, datemode):
@@ -140,17 +146,17 @@ def transform_row(sheet, row, datemode):
 
     l10n_mx_edi_payment_method_id = sheet.cell_value(
         row, L10N_MX_EDI_PAYMENT_METHOD_ID)
-    out["l10n_mx_edi_payment_method_id"] = str(
-        int(l10n_mx_edi_payment_method_id))
+    out["l10n_mx_edi_payment_method_id"] = normalize_id_str(
+        l10n_mx_edi_payment_method_id)
 
     out["type"] = "out_invoice"
 
     out["invoice_line_ids"] = [{
-        "product_id": str(int(sheet.cell_value(row, INVOICE_LINE_IDS_PRODUCT_ID))),
+        "product_id": normalize_id_str(sheet.cell_value(row, INVOICE_LINE_IDS_PRODUCT_ID)),
         "quantity": 1,
         "name": sheet.cell_value(row, INVOICE_LINE_IDS_NAME),
         "price_unit": sheet.cell_value(row, INVOICE_LINE_IDS_PRICE_UNIT),
-        "commission_id": sheet.cell_value(row, INVOICE_LINE_IDS_COMMISSION_ID),
+        "commission_id": normalize_id_num(sheet.cell_value(row, INVOICE_LINE_IDS_COMMISSION_ID)),
         "sales_channel": sheet.cell_value(row, PARTNER_ID_REF)
     }]
 
@@ -163,7 +169,7 @@ def transform_row(sheet, row, datemode):
     }
 
     out["purchase_order_id"] = {
-        "partner_id": str(int(sheet.cell_value(row, PURCHASE_ORDER_ID_PARTNER_ID))),
+        "partner_id": normalize_id_str(sheet.cell_value(row, PURCHASE_ORDER_ID_PARTNER_ID)),
         "partner_ref": sheet.cell_value(row, PURCHASE_ORDER_ID_PARTNER_REF),
         "price_unit": sheet.cell_value(row, PURCHASE_ORDER_ID_PRICE_UNIT),
         "currency_id": sheet.cell_value(row, PURCHASE_ORDER_ID_CURRENCY_ID),

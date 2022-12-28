@@ -20,7 +20,7 @@ pip install -r requirements.txt
 ```json
 {
   "meta": {
-    "date": "2022-12-07T18:23:13.237546",
+    "date": "2022-12-28T11:30:11.576170",
     "object_count": 4,
     "type": "invoices"
   },
@@ -39,26 +39,27 @@ pip install -r requirements.txt
       "check_in_date": "2022-01-11",
       "is_refundable": true,
       "max_cancel_date": "2022-01-11",
-      "l10n_mx_edi_payment_method_id": 99.0,
+      "l10n_mx_edi_payment_method_id": "99",
       "type": "out_invoice",
       "invoice_line_ids": [
         {
-          "product_id": 1,
+          "product_id": "1",
+          "quantity": 1,
           "name": "Hôtel Villa Cosy",
-          "price_unit": 577,
-          "commission_id": 20.0,
+          "price_unit": 577.0,
+          "commission_id": 20,
           "sales_channel": "BB00021"
         }
       ],
       "multicurrency": {
         "currency": "USD",
-        "currency_amount": 577,
+        "currency_amount": 577.0,
         "rate": 0,
-        "conversion_value": 577,
-        "comission_fixed": 0
+        "conversion_value": 577.0,
+        "commission_fixed": 0
       },
       "purchase_order_id": {
-        "partner_id": 57,
+        "partner_id": "57",
         "partner_ref": "197-7181117",
         "price_unit": 559.6,
         "currency_id": "USD",
@@ -66,7 +67,7 @@ pip install -r requirements.txt
         "due_date": "2022-01-11"
       },
       "journal_id": "BB00021",
-      "invoice_date_due": "2022-01-11"
+      "invoce_date_due": "2022-01-11"
     },
     {
       "ref": "22BB00021MX001000015",
@@ -82,26 +83,27 @@ pip install -r requirements.txt
       "check_in_date": "2022-02-11",
       "is_refundable": true,
       "max_cancel_date": "2022-01-11",
-      "l10n_mx_edi_payment_method_id": null,
+      "l10n_mx_edi_payment_method_id": "98",
       "type": "out_invoice",
       "invoice_line_ids": [
         {
-          "product_id": 1,
+          "product_id": "1",
+          "quantity": 1,
           "name": "Hilton Madrid Airport",
-          "price_unit": 138,
-          "commission_id": null,
+          "price_unit": 138.0,
+          "commission_id": 21,
           "sales_channel": "BB00021"
         }
       ],
       "multicurrency": {
         "currency": "USD",
-        "currency_amount": 138,
+        "currency_amount": 138.0,
         "rate": 0,
-        "conversion_value": 138,
-        "comission_fixed": 0
+        "conversion_value": 138.0,
+        "commission_fixed": 0
       },
       "purchase_order_id": {
-        "partner_id": 57,
+        "partner_id": "57",
         "partner_ref": "102-12850026",
         "price_unit": 133.26,
         "currency_id": "USD",
@@ -109,7 +111,7 @@ pip install -r requirements.txt
         "due_date": "2022-02-11"
       },
       "journal_id": "BB00021",
-      "invoice_date_due": "2022-01-11"
+      "invoce_date_due": "2022-01-11"
     },
     {
       "ref": "22BB00021MX001000016",
@@ -125,26 +127,27 @@ pip install -r requirements.txt
       "check_in_date": "2022-06-11",
       "is_refundable": true,
       "max_cancel_date": "2022-01-11",
-      "l10n_mx_edi_payment_method_id": null,
+      "l10n_mx_edi_payment_method_id": "97",
       "type": "out_invoice",
       "invoice_line_ids": [
         {
-          "product_id": 6,
+          "product_id": "6",
+          "quantity": 1,
           "name": "Lo mejor de la Toscana en grupo reducido: Montepulciano y Pienza con maridaje de vino y comida",
-          "price_unit": 217,
-          "commission_id": null,
+          "price_unit": 217.0,
+          "commission_id": 70,
           "sales_channel": "BB00021"
         }
       ],
       "multicurrency": {
         "currency": "USD",
-        "currency_amount": 217,
+        "currency_amount": 217.0,
         "rate": 0,
-        "conversion_value": 217,
-        "comission_fixed": 0
+        "conversion_value": 217.0,
+        "commission_fixed": 0
       },
       "purchase_order_id": {
-        "partner_id": 57,
+        "partner_id": "57",
         "partner_ref": "207-8287559",
         "price_unit": 210.1,
         "currency_id": "USD",
@@ -152,7 +155,7 @@ pip install -r requirements.txt
         "due_date": "2022-06-11"
       },
       "journal_id": "BB00021",
-      "invoice_date_due": "2022-01-11"
+      "invoce_date_due": "2022-01-11"
     },
     {
       "ref": "22BB00021MX001000017",
@@ -168,26 +171,27 @@ pip install -r requirements.txt
       "check_in_date": "2022-11-22",
       "is_refundable": true,
       "max_cancel_date": "2022-01-11",
-      "l10n_mx_edi_payment_method_id": null,
+      "l10n_mx_edi_payment_method_id": "96",
       "type": "out_invoice",
       "invoice_line_ids": [
         {
-          "product_id": 6,
+          "product_id": "6",
+          "quantity": 1,
           "name": "Museos Vaticanos, Capilla Sixtina y basílica de San Pedro - Acceso prioritario",
-          "price_unit": 105,
-          "commission_id": null,
+          "price_unit": 105.0,
+          "commission_id": 422,
           "sales_channel": "BB00021"
         }
       ],
       "multicurrency": {
         "currency": "USD",
-        "currency_amount": 105,
+        "currency_amount": 105.0,
         "rate": 0,
-        "conversion_value": 105,
-        "comission_fixed": 0
+        "conversion_value": 105.0,
+        "commission_fixed": 0
       },
       "purchase_order_id": {
-        "partner_id": 57,
+        "partner_id": "57",
         "partner_ref": "207-8287557",
         "price_unit": 101.14,
         "currency_id": "USD",
@@ -195,7 +199,7 @@ pip install -r requirements.txt
         "due_date": "2022-11-22"
       },
       "journal_id": "BB00021",
-      "invoice_date_due": "2022-01-11"
+      "invoce_date_due": "2022-01-11"
     }
   ]
 }

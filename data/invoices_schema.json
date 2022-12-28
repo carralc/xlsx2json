@@ -1,0 +1,135 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "Invoices",
+    "description": "Customer Invoices to import from 1Book",
+    "type": "object",
+    "properties": {
+        "meta": {
+            "type": "object",
+            "properties": {
+                "date": {"type": "string", "format": "date-time"},
+                "type": {"enum": ["invoices"]},
+                "object_count": {"type": "integer"},
+                "page_number": {"type": "integer"},
+                "page_size": {"type": "integer"}
+            },
+            "required": ["date", "type"]
+        },
+        "data": {
+            "type": "array",
+            "items" : {
+                "type": "object",
+                "properties": {
+                    "ref": {"type": "string", "minLength": 1},
+                    "partner_id": {
+                        "type": "object",
+                        "properties": {
+                            "ref": {"type": "string", "minLength": 1},
+                            "name": {"type": "string", "minLength": 1},
+                            "vat": {"type": "string", "minLength": 1},
+                            "email": {"type": "string", "minLength": 1},
+                            "country_id": {"type": "string", "minLength": 2, "maxLength": 2},
+                            "state_id": {"type": "string", "minLength": 1},
+                            "city": {"type": "string", "minLength": 1},
+                            "zip": {"type": "string", "minLength": 1}
+                        },
+                        "required": [
+                            "ref",
+                            "name",
+                            "vat",
+                            "country_id"
+                        ]
+                    },
+                    "company_id": {"type": "string", "minLength": 3, "maxLength": 3},
+                    "invoice_date": {"type": "string", "format": "date"},
+                    "check_in_date": {"type": "string", "format": "date"},
+                    "max_cancel_date": {"type": "string", "format": "date"},
+                    "is_refundable": {"type": "boolean"},
+                    "currency_id": {"type": "string", "minLength": 3, "maxLength": 3},
+                    "type": {"enum": ["out_invoice"]},
+                    "l10n_mx_edi_usage": {"type": "string", "minLength": 3, "maxLength": 3},
+                    "l10n_mx_edi_payment_method_id": {"type": "string", "minLength": 2, "maxLength": 2},
+                    "journal_id": {"type": "string", "minLength": 1},
+                    "multicurrency": {
+                        "type": "object",
+                        "properties": {
+                            "currency": {"type": "string", "minLength": 3, "maxLength": 3},
+                            "currency_amount": {"type": "number"},
+                            "rate": {"type": "number"},
+                            "conversion_value": {"type": "number"},
+                            "conversion_discount_value": {"type": "number"},
+                            "conversion_cashback_value": {"type": "number"}
+                        },
+                        "required": [
+                            "currency",
+                            "currency_amount",
+                            "rate",
+                            "conversion_value"
+                        ]
+                    },
+                    "invoice_line_ids": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "product_id": {"type": "string", "minLength": 1},
+                                "name": {"type": "string"},
+                                "quantity": {"type": "number"},
+                                "price_unit": {"type": "number"},
+                                "sales_channel": {"type": "string", "minLength": 1},
+                                "commission_id": {"type": "number"},
+                                "commission_fixed": {"type": "number"}
+                            },
+                            "required": [
+                                "product_id",
+                                "name",
+                                "quantity",
+                                "price_unit"
+                            ]
+                        },
+                        "minItems": 1,
+                        "uniqueItems": true
+                    },
+                    "purchase_order_id": {
+                        "type": "object",
+                        "properties": {
+                            "partner_ref": {"type": "string", "minLength": 1},
+                            "partner_id": {"type": "string", "minLength": 1},
+                            "currency_id": {"type": "string", "minLength": 3, "maxLength": 3},
+                            "price_unit": {"type": "number"},
+                            "date_order": {"type": "string", "format": "date-time"},
+                            "commission_profit": {"type": "number"},
+                            "due_date": {"type": "string", "format": "date"},
+                            "commission_profit_currency_id": {"type": "string", "minLength": 3, "maxLength": 3}
+                        },
+                        "required": [
+                            "partner_ref",
+                            "partner_id",
+                            "currency_id",
+                            "price_unit",
+                            "date_order"
+                        ]
+                    }
+                },
+                "required": [
+                    "ref",
+                    "partner_id",
+                    "company_id",
+                    "invoice_date",
+                    "check_in_date",
+                    "max_cancel_date",
+                    "currency_id",
+                    "type",
+                    "invoice_line_ids"
+                ]
+            },
+            "minItems": 1,
+            "uniqueItems": true
+        }
+    },
+    "required": [
+        "meta",
+        "data"
+    ],
+    "additionalItems": false
+}
